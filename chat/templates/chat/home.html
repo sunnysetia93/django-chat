@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HOME</title>
+			<div style="padding-right: 5em" align="right"><a href="{% url 'logout' %}">logout</a></div>
+</head>
+<body>
+<h2 align="center"> HOME </h2>
+
+<h4 style="padding-left: 5em;">Hello, {{s.name}} !</h4>
+
+<br>
+<div align="center">
+		{% for u in users %}
+
+		<p style="background-color: #EDBB99  ; color: white; margin-left: 35em; margin-right: 35em; padding-top: .5em; padding-bottom: .5em; border-radius: 15px;"><a href="{% url 'dialog' uid=s.pk uuid=u.pk %}">{{u.name}}</a></p>
+		{%endfor%}
+</div>
+</body>
+</html>

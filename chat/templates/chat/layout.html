@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	{% block logout %} 
+		<a href="{% url 'logout' %}">logout</a>
+	{%endblock%}
+</head>
+<body>
+{%block content%}
+{% endblock %}
+</body>
+</html>

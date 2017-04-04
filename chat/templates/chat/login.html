@@ -1,0 +1,23 @@
+<html>
+<head>
+<title> Login </title>
+</head>
+<body style="padding-top: 5em;">
+<h2 align="center">Login Form</h2>
+ <div id="login" align="center">
+      <form  id ="login-form" method="post" nonvalidate="nonvalidate">{%csrf_token%}
+   
+        <p><input type="text" name="username"  placeholder="Username" id="username"></p><br>
+        <p><input type="password" name="password"  placeholder="Password" id="password"></p><br>
+        <p class="submit"><input type="submit" name="commit" value="LOGIN"; ></p>
+      </form>
+
+<div>
+New Users, <a href="register"> Please SIGN UP First ! </a>
+</div>
+<div>
+</body>
+</html>
+
+
+

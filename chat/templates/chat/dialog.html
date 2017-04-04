@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Chat Dialog - {{a.name}}</title>
+				<div style="padding-right: 5em" align="right"><a href="{% url 'logout' %}">logout</a></div>
+</head>
+
+<body>
+
+	<h3 align="center" style="background-color:#D7BDE2; padding-top: .5em; padding-bottom: .5em; margin-left: 25em; margin-right: 25em; border-radius: 15px;"><u>Chat Dialog of {{a.name}} and {{b.name}}</u></h3>
+
+	<div style="padding-left: 2em; padding-top: .5em;">
+		
+		{% for m in messages.all %}
+
+		<p style="padding-left: 15em;"><b>{{m.sender.name}}</b> : {{m.text}}</p>
+		{% endfor %}
+
+	</div>
+
+</body>
+<footer>
+	
+	<form method="POST">
+	{% csrf_token %}
+	<div align="center" style="padding-top: 1em">
+		<input type="text" name="msg" id="msg" placeholder="enter text">
+		<input type="submit" id="submit" value="submit"></input>
+	</div>
+	</form>
+	
+</footer>
+</html>
