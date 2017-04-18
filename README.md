@@ -2,7 +2,7 @@
 
 A Chat Application developed using <b>Django</b> & <b>Ajax/JQuery</b>.
 
-URL: <a href="sunnysetia.pythonanywhere.com">Django-Chat</a>
+URL: <a href="http://sunnysetia.pythonanywhere.com/">Django-Chat</a>
 
 <h3><b>Future Scope</b></h3>
 
