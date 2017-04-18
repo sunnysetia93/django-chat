@@ -2,20 +2,50 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<title>HOME</title>
-			<div style="padding-right: 5em" align="right"><a href="{% url 'logout' %}">logout</a></div>
-</head>
-<body>
-<h2 align="center"> HOME </h2>
 
-<h4 style="padding-left: 5em;">Hello, {{s.name}} !</h4>
+</head>
+<body class="container">
+	
+	<h2 id="heading" style="width: 10em; color: white; background-color: #EC7063; border-radius: 20em; margin-left: 13.5em; padding-top: 10px; padding-bottom: 10px;" align="center"> Home </h2><br>
+	<div align="right"><a href="{% url 'logout' %}"><button type="button" class="btn btn-basic">logout</button></a>
+	<h4 align="left" style="padding-left: 5em; color: grey;">Hello, {{s.name}} !</h4></div>
 
 <br>
-<div align="center">
+<div class="container-fluid" style=" padding-right: 15em; width: 5px;">
+		
+	<table border="0" cellpadding="0" cellspacing="0" class="table">
+			 <thead>
+		    <tr>
+		      <th style="text-align: center">Online Status</th>
+		      <th style="text-align: center">Name</th>
+		    </tr>
+		  </thead>	
 		{% for u in users %}
-
-		<p style="background-color: #EDBB99  ; color: white; margin-left: 35em; margin-right: 35em; padding-top: .5em; padding-bottom: .5em; border-radius: 15px;"><a href="{% url 'dialog' uid=s.pk uuid=u.pk %}">{{u.name}}</a></p>
+			<tbody><tr>
+			{% if u.online == 1 %}
+				<th style="text-align: center"><button style="padding-top: 8px; padding-left: 3px; border-radius: 35px;" type="button" id="onlineStatus" class="btn btn-success"></button></th>
+			{% else %}
+				<th style="text-align: center"><button style="padding-top: 8px; padding-left: 3px; border-radius: 35px;"type="button" id="onlineStatus" class="btn btn-danger"></button></th>
+			{% endif %}
+		
+			
+			<th style="text-align: center"> <a href="{% url 'dialog' uid=u.pk %}"><button type="button" class="btn btn-info" style="padding-left: 15px;" >{{u.name}}</button></a></th>
+			
+			</tr></tbody>
+			
 		{%endfor%}
+	<table>
 </div>
+
 </body>
+
+	
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>

@@ -5,6 +5,7 @@ class Person(models.Model):
 	user = models.OneToOneField(User)
 	name = models.CharField(max_length=50)
 	contact = models.CharField(max_length=12)
+	online = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.name
@@ -17,8 +18,8 @@ class Dialog(models.Model):
 		return self.author.name + " - " + self.reader.name
 
 class Message(models.Model):
-	dialog = models.ForeignKey(Dialog,unique=True)
-	sender = models.ForeignKey(Person,unique=True)
+	dialog = models.ForeignKey(Dialog)
+	sender = models.ForeignKey(Person)
 	text = models.TextField()
 
 	def __str__(self):

@@ -1,0 +1,10 @@
+<div id="chat-body" style="padding-left: 2em; padding-top: .5em;">
+	
+	<ul style="list-style: none;" id="msg-list">
+	{% for m in messages.all %}
+
+	<li style="padding-left: 15em;"><b>{{m.sender.name}}</b> : {{m.text}}</li>
+	{% endfor %}
+	</ul>
+
+</div>

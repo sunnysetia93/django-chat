@@ -1,33 +1,199 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style type="text/css">
+	
+	.scroll-area{
+	  width:100%;
+	  height:calc(100% - 200px);
+	  margin-top:25px;
+	  background-color:#E5E7E9;
+	  float:left;
+	  overflow-y:scroll;
+	  border-radius:15px;
+}
+</style>
 	<title> Chat Dialog - {{a.name}}</title>
-				<div style="padding-right: 5em" align="right"><a href="{% url 'logout' %}">logout</a></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	$(document).on("click","#submit",function(evt)
+	{
+
+		evt.preventDefault();
+
+		var url = "/getmessages/";
+		var formData = {
+			'uid' : {{b.id}},
+			'text' : $('#msg').val(),
+			'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+		};
+
+		$.ajax({
+
+			url : url,
+			type : 'POST',
+			dataType :'json',
+			data : formData,
+			success : function(response)
+			{
+				$('#msg').html('');
+				console.log(response);
+				var htm = '<ul style="list-style: none;">';		
+				for(var i=0;i<response.length-1;i+=1)
+				{	
+					if(response[i].sender == $('#aname').text())
+					{	
+						htm += '<li style="text-align:right; padding-right:30px;"><b>';
+						htm += response[i].sender;
+						htm += '</b> : ';
+						htm += response[i].text;
+						htm += '</li>';
+					}		
+					else
+					{
+						htm += '<li style="text-align:left; padding-left:25px;"><b>';
+						htm += response[i].sender;
+						htm += '</b> : ';
+						htm += response[i].text;
+						htm += '</li>';
+					}
+					htm+='<hr>';
+				}
+				htm += '</ul>'
+				$('#chat-body').html(htm);
+			},
+	      error:  function (jqXHR, exception) {
+		        var msg = '';
+		        if (jqXHR.status === 0) {
+		            msg = 'Not connect.\n Verify Network.';
+		        } else if (jqXHR.status == 404) {
+		            msg = 'Requested page not found. [404]';
+		        } else if (jqXHR.status == 500) {
+		            msg = 'Internal Server Error [500].';
+		        } else if (exception === 'parsererror') {
+		            msg = 'Requested JSON parse failed.';
+		        } else if (exception === 'timeout') {
+		            msg = 'Time out error.';
+		        } else if (exception === 'abort') {
+		            msg = 'Ajax request aborted.';
+		        } else {
+		            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+		        }
+		        console.log(msg);
+      }
+
+		}); // end post
+
+	}); //end form
+
+}); // end ready
+</script>
+
 </head>
 
-<body>
+<body class="container">
 
-	<h3 align="center" style="background-color:#D7BDE2; padding-top: .5em; padding-bottom: .5em; margin-left: 25em; margin-right: 25em; border-radius: 15px;"><u>Chat Dialog of {{a.name}} and {{b.name}}</u></h3>
+	<div class="row" style=" height: 5em; padding-top: 1em;">
+		<div class="col-lg-6" align="right" style=" margin-left: 20em;">
+			<a href="{% url 'logout' %}">
+				<button type="button" class="btn btn-basic">logout</button>
+			</a>
 
-	<div style="padding-left: 2em; padding-top: .5em;">
-		
-		{% for m in messages.all %}
+		<div class="col-lg-6" align="left">
+			<a href="{% url 'home' %}">
+				<button type="button" class="btn btn-basic">home</button>
+			</a>
 
-		<p style="padding-left: 15em;"><b>{{m.sender.name}}</b> : {{m.text}}</p>
-		{% endfor %}
+		</div>
+	
+	</div>	
+	
+	<div class="row" style=" padding-top: 3em;">
 
+		<h3 align="center" style="background-color:#D7BDE2; border-radius: 5px; padding-top: 5px; padding-bottom: 5px;"><b>Chat Thread<div  id="aname" hidden="true" >{{a.name}}</div> <div hidden="true" id="bname">{{b.name}}</div></b></h3>
+	
+	</div>
+	
+	<div class="row">
+		<div id="chat-body" class="scroll-area" align="center" style=" height: 25em; width: 86em; padding-top: .5em;">
+			
+			<ul style="list-style: none;" id="msg-list">{% for m in messages.all %}
+
+			{% ifequal m.sender.name a.name %}
+			<li style="text-align:right; padding-right:30px;"><b>{{m.sender.name}}</b> : {{m.text}}</li>
+			{% else %}
+			<li style="text-align: left; padding-left:25px;"><b>{{m.sender.name}}</b> : {{m.text}}</li>
+			{%endifequal%}
+			<hr>
+			{% endfor %}
+			</ul>
+
+		</div>
 	</div>
 
-</body>
+
 <footer>
 	
-	<form method="POST">
+	<form id="submitform" method="post">
 	{% csrf_token %}
 	<div align="center" style="padding-top: 1em">
-		<input type="text" name="msg" id="msg" placeholder="enter text">
+		<input type="text" name="msg" id="msg">
 		<input type="submit" id="submit" value="submit"></input>
 	</div>
 	</form>
 	
 </footer>
+<!--<script type="text/javascript">
+
+		$('#submitform').on('submit',function(e) {
+
+			e.preventDefault();
+					window.alert("hey");
+			$.ajax({
+
+				type:'POST',
+				url: window.location.pathname,
+				data : 
+				{
+					msgbox : $('#msg').val()
+
+				},
+
+				success : function(json){
+
+					window.alert("hey");
+					$('#msg').val('');
+					$('#msg-list').append('<li>' + json.sender + ' : ' + json.msg + '</li>');
+
+
+				}
+			});
+
+		});
+
+function getMessages(){
+
+    $.get('/messages/', function(messages){
+        $('#msg-list').html(messages);
+    });
+
+}
+
+$(function(){
+    refreshTimer = setInterval(getMessages, 2500);
+});
+</script>-->
+
+	
+<!-- jQuery library -->
+
+</body>
 </html>
