@@ -81,11 +81,11 @@ DATABASES = {
 
 'ENGINE': 'django.db.backends.mysql',
 
-'NAME': 'chat_tratoli', 
+'NAME': '', # enter db details 
 
-'USER':'root',
+'USER':'', # enter db details
 
-'PASSWORD':'setia',
+'PASSWORD':'', # enter db details
 
 'HOST':'localhost',
 
