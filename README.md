@@ -1,6 +1,6 @@
 # django-chat
 
-A Chat Application developed using <b>Django</b> & <b>Ajax/JQuery</b>.
+A Chat application which enables 1-to-1 chat between users, developed using <b>Django</b> & <b>Ajax/JQuery</b>.
 
 URL: <a href="http://sunnysetia.pythonanywhere.com/">Django-Chat</a>
 
